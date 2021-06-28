@@ -1,21 +1,21 @@
 {
-  "name": "electron-react-webpack-boilerplate",
+  "name": "moh-planner",
   "version": "1.15.0",
   "description": "Minimal Electron, React, PostCSS and Webpack boilerplate to help you get started with building your next app.",
   "license": "MIT",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexdevero/electron-react-webpack-boilerplate.git"
+    "url": "https://github.com/mohkamfer/moh-planner.git"
   },
   "homepage": "",
   "bugs": {
-    "url": "https://github.com/alexdevero/electron-react-webpack-boilerplate/issues"
+    "url": "https://github.com/mohkamfer/moh-planner/issues"
   },
   "author": {
-    "name": "Alex Devero",
-    "email": "deveroalex@gmail.com",
-    "url": "https://github.com/alexdevero"
+    "name": "Muhammad Kamal Fergany",
+    "email": "mohammedkamalfergany@yahoo.com",
+    "url": "https://mohkamfer.github.io/"
   },
   "keywords": [
     "app",
