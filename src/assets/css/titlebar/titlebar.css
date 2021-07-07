@@ -1,0 +1,83 @@
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  height: 30px;
+  display: flex;
+  background-color: #111;
+  border-bottom: 1px solid black;
+}
+
+.titlebar .title {
+  margin: auto 0 auto 10px;
+}
+
+.wc-box {
+  -webkit-app-region: no-drag;
+  margin-left: auto;
+}
+
+.wc-box span {
+  position: relative;
+  float: left;
+  width: 30px;
+  height: 30px;
+  transition: background-color 100ms ease;
+}
+
+.wc-box span:before,
+.wc-box span:after {
+  top: 30%;
+  right: 30%;
+  bottom: 30%;
+  left: 30%;
+  content: "";
+  position: absolute;
+  border-color: #CCCCCC;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+}
+
+.wc-box .minimize:before {
+  border-bottom-width: 2px;
+}
+
+.wc-box .maximize:before {
+  border-width: 1px 1px 2px 1px;
+}
+
+.wc-box .close:before,
+.wc-box .close:after {
+  bottom: 50%;
+  top: 50%;
+}
+
+.wc-box .close:before {
+  transform: rotate(45deg);
+}
+
+.wc-box .close:after {
+  transform: rotate(-45deg);
+}
+
+.wc-box span:hover {
+  background-color: #CCCCCC;
+}
+
+.wc-box .close:hover {
+  background-color: #E04343;
+}
+
+.wc-box span:active {
+  transform: translateY(1px);
+  filter: brightness(1.5);
+}
+
+.wc-box span:hover:after,
+.wc-box span:hover:before {
+  border-color: #333333;
+}
+
+.wc-box .close:hover:after,
+.wc-box .close:hover:before {
+  border-color: #FFFFFF;
+}

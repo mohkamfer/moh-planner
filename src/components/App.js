@@ -1,12 +1,16 @@
 import React from 'react';
+import Titlebar from './titlebar';
+import Timeline from './timeline';
 
 import '../assets/css/App.css';
 
 function App() {
   return (
-    <div>
-      <div id="timeline"></div>
-    </div>
+    <React.Fragment>
+      <Titlebar />
+      <Timeline>
+      </Timeline>
+    </React.Fragment>
   )
 };
 
