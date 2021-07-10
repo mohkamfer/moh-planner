@@ -1,7 +1,7 @@
 'use strict'
 
 // Import parts of electron to use
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -81,6 +81,16 @@ function createWindow() {
         .catch(err => console.log('Error loading React DevTools: ', err));
       mainWindow.webContents.openDevTools();
     }
+
+    ipcMain.on('minimize', (e, arg) => {
+      mainWindow.minimize();
+    });
+    ipcMain.on('maximize', (e, arg) => {
+      mainWindow.setFullScreen(!mainWindow.isFullScreen());
+    });
+    ipcMain.on('close', (e, arg) => {
+      mainWindow.close();
+    });
   });
 
   // Emitted when the window is closed.

@@ -2,26 +2,28 @@ import React from 'react';
 
 import '../assets/css/titlebar/titlebar.css';
 
+const { ipcRenderer } = require('electron');
+
 function Titlebar() {
   const minimize = (e) => {
-    win.minimize();
+    ipcRenderer.send('minimize');
   };
 
   const maximize = (e) => {
-    win.setFullScreen(!win.isFullScreen());
+    ipcRenderer.send('maximize');
   };
 
   const close = (e) => {
-    win.close();
+    ipcRenderer.send('close');
   };
 
   return (
-    <div class="titlebar">
-      <span class="title">moh-planner</span>
-      <div class="wc-box">
-        <span onClick={minimize} class="minimize"></span>
-        <span onClick={maximize} class="maximize"></span>
-        <span onClick={close} class="close"></span>
+    <div className="titlebar">
+      <span className="title">moh-planner</span>
+      <div className="wc-box">
+        <span onClick={minimize} className="minimize"></span>
+        <span onClick={maximize} className="maximize"></span>
+        <span onClick={close} className="close"></span>
       </div>
     </div>
   );
