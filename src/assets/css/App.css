@@ -1,9 +1,31 @@
-/* Main CSS file */
+/* Example stylesheet */
+@media screen and (prefers-color-scheme: light), screen and (prefers-color-scheme: no-preference) {
+    /* Light theme */
+    body{
+      color: #000;
+      background-color: #fff;
+    }
+  }
+  
+  @media screen and (prefers-color-scheme: dark) {
+    /* Dark theme */
+    body {
+      color: #fff;
+      background-color: #222;
+    }
+  }
+  
+  h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 200;
+  }
 
-@import 'main/main.css';
-
-html, body {
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
-}
+  #container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 31px);
+  }
+  

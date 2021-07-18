@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../assets/css/titlebar/titlebar.css';
+import '../assets/css/titlebar.css';
 
 const { ipcRenderer } = require('electron');
 

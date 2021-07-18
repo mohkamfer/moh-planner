@@ -1,15 +1,18 @@
 import React from 'react';
 import Titlebar from './titlebar';
+import Suggestions from './suggestions';
 import Timeline from './timeline';
 
-import '../assets/css/App.css';
+import '../assets/css/index.css';
 
 function App() {
   return (
     <React.Fragment>
       <Titlebar />
-      <Timeline>
-      </Timeline>
+      <div id="container">
+        <Suggestions />
+        <Timeline />
+      </div>
     </React.Fragment>
   )
 };
