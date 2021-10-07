@@ -86,7 +86,11 @@ function createWindow() {
       mainWindow.minimize();
     });
     ipcMain.on('maximize', (e, arg) => {
-      mainWindow.setFullScreen(!mainWindow.isFullScreen());
+      if (mainWindow.isMaximized()) {
+        mainWindow.restore();
+      } else {
+        mainWindow.maximize();
+      }
     });
     ipcMain.on('close', (e, arg) => {
       mainWindow.close();
