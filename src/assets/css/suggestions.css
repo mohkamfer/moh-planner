@@ -1,4 +1,9 @@
 #suggestions-area {
   background-color: darkblue;
-  flex: 1;
+  height: 100px;
+}
+
+#suggestions-area p {
+  text-align: center;
+  vertical-align: middle;
 }

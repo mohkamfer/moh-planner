@@ -4,7 +4,7 @@ import '../assets/css/suggestions.css';
 
 function Suggestions() {
     return (
-        <div id="suggestions-area"></div>
+        <div id="suggestions-area"><p>Suggestions WIP</p></div>
     );
 }
 

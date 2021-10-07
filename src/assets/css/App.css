@@ -21,11 +21,24 @@
     font-weight: 200;
   }
 
+  body {
+    height: 100%;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
   #container {
     display: flex;
     flex-direction: column;
-    position: absolute;
     width: 100%;
-    height: calc(100% - 31px);
+    height: 100%;
   }
   
