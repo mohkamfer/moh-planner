@@ -24,6 +24,7 @@
   color: #eee;
   text-align: center;
   border: 1px solid #aaaa;
+  cursor: pointer;
 }
 
 .hour-label {

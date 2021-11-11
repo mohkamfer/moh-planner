@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { format, subHours, addHours } from 'date-fns';
 import tippy, { followCursor } from 'tippy.js';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +18,16 @@ vex.defaultOptions.className = 'vex-theme-os'
 
 function Timeline() {
 
-  const [events, setEvents] = useState([]);
+  function useStateRef(initialValue) {
+    const [value, setValue] = useState(initialValue);
+    const ref = useRef(value);
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return [value, setValue, ref];
+  }
+
+  const [events, setEvents, eventsRef] = useStateRef([]);
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -42,7 +51,8 @@ function Timeline() {
           }]);
         }
       }
-    });};
+    });
+  };
 
   useEffect(() => {
     let now = new Date();
@@ -84,6 +94,30 @@ function Timeline() {
       inline: 'center'
     });
 
+    $(document).on('click', '.event', function (e) {
+      e.preventDefault();
+      const uuid = e.target.getAttribute('uuid');
+      let eventIndex = -1;
+      const event = eventsRef.current.find(function (event, index) {
+        eventIndex = index;
+        return event.uuid === uuid;
+      });
+
+      if (event) {
+        vex.dialog.prompt({
+          message: 'Enter event title',
+          placeholder: 'Event title',
+          callback: function (value) {
+            if (value) {
+              event.title = value;
+              eventsRef.current.splice(eventIndex, 1);
+              setEvents([...eventsRef.current, event]);
+            }
+          }
+        });
+      }
+    });
+
     $(document).on('mousewheel', '#main-timeline', function (e) {
       if (e.originalEvent.wheelDelta / 120 > 0) {
         $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() - 25);
@@ -115,6 +149,7 @@ function Timeline() {
       $(document).off('mousewheel', '#main-timeline');
       $(document).off('mousemove', '#main-timeline');
       $(document).off('mousemove');
+      $(document).off('click', '.event');
     });
   }, []);
 
@@ -124,6 +159,7 @@ function Timeline() {
       const label = $(`.hour-label[day=${event.time.getDate()}][hour=${event.time.getHours()}]`);
       const eventCard = $(`<div
       class="event"
+      uuid="${event.uuid}"
       style="
         left:${parseInt(label.css('left')) + (parseInt(label.css('width')) / 2) + (parseInt(event.time.getMinutes() * 2))}px;
         width:${event.duration * 2}px">
