@@ -85,3 +85,8 @@
   background-color: #2299;
   border: 1px solid #aaa9;
 }
+
+.red-background {
+  color: #eee;
+  background-color: #a55 !important;
+}

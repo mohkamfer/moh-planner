@@ -7,14 +7,14 @@ import draggable from 'jquery-ui/ui/widgets/draggable';
 import resizable from 'jquery-ui/ui/widgets/resizable';
 import '../assets/jquery-ui/all.css';
 import '../assets/css/vex-js/vex.css';
-import '../assets/css/vex-js/vex-theme-os.css';
+import '../assets/css/vex-js/vex-theme-default.css';
 
 import '../assets/css/timeline.css';
 import $ from 'jquery';
 
 var vex = require('vex-js')
 vex.registerPlugin(require('vex-dialog'))
-vex.defaultOptions.className = 'vex-theme-os'
+vex.defaultOptions.className = 'vex-theme-default'
 
 function Timeline() {
 
@@ -104,14 +104,23 @@ function Timeline() {
       });
 
       if (event) {
-        vex.dialog.prompt({
+        vex.dialog.open({
           message: 'Enter event title',
-          placeholder: 'Event title',
+          input: [
+            '<input value="' + event.title + '" name="title" type="text" placeholder="Event title" required />',
+          ].join(''),
+          buttons: [
+            $.extend({}, vex.dialog.buttons.YES, { text: 'Save' }),
+            $.extend({}, vex.dialog.buttons.NO, { text: 'Delete', className: 'red-background' })
+          ],
           callback: function (value) {
             if (value) {
-              event.title = value;
+              event.title = value.title;
               eventsRef.current.splice(eventIndex, 1);
               setEvents([...eventsRef.current, event]);
+            } else {
+              eventsRef.current.splice(eventIndex, 1);
+              setEvents([...eventsRef.current]);
             }
           }
         });
