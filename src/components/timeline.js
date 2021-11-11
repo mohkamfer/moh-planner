@@ -33,12 +33,14 @@ function Timeline() {
       message: 'Enter event title',
       placeholder: 'Event title',
       callback: function (value) {
-        setEvents([...events, {
-          uuid: uuidv4(),
-          title: value,
-          time: eventDate,
-          duration: 30,
-        }]);
+        if (value) {
+          setEvents([...events, {
+            uuid: uuidv4(),
+            title: value,
+            time: eventDate,
+            duration: 30,
+          }]);
+        }
       }
     });};
 
