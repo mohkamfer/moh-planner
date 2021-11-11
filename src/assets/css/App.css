@@ -1,44 +1,158 @@
 /* Example stylesheet */
+
 @media screen and (prefers-color-scheme: light), screen and (prefers-color-scheme: no-preference) {
-    /* Light theme */
-    body{
-      color: #000;
-      background-color: #fff;
-    }
-  }
-  
-  @media screen and (prefers-color-scheme: dark) {
-    /* Dark theme */
-    body {
-      color: #fff;
-      background-color: #222;
-    }
-  }
-  
-  h1 {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 21px;
-    font-weight: 200;
-  }
-
+  /* Light theme */
   body {
-    height: 100%;
+    color: #000;
+    background-color: #fff;
   }
+}
 
-  html {
-    height: 100%;
+@media screen and (prefers-color-scheme: dark) {
+  /* Dark theme */
+  body {
+    color: #fff;
+    background-color: #222;
   }
+}
 
-  #root {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+h1 {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 200;
+}
 
-  #container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-  
+body {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Tippy */
+
+.tippy-box[data-animation=fade][data-state=hidden] {
+  opacity: 0
+}
+
+[data-tippy-root] {
+  max-width: calc(100vw - 10px)
+}
+
+.tippy-box {
+  position: relative;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: normal;
+  outline: 0;
+  transition-property: transform, visibility, opacity
+}
+
+.tippy-box[data-placement^=top]>.tippy-arrow {
+  bottom: 0
+}
+
+.tippy-box[data-placement^=top]>.tippy-arrow:before {
+  bottom: -7px;
+  left: 0;
+  border-width: 8px 8px 0;
+  border-top-color: initial;
+  transform-origin: center top
+}
+
+.tippy-box[data-placement^=bottom]>.tippy-arrow {
+  top: 0
+}
+
+.tippy-box[data-placement^=bottom]>.tippy-arrow:before {
+  top: -7px;
+  left: 0;
+  border-width: 0 8px 8px;
+  border-bottom-color: initial;
+  transform-origin: center bottom
+}
+
+.tippy-box[data-placement^=left]>.tippy-arrow {
+  right: 0
+}
+
+.tippy-box[data-placement^=left]>.tippy-arrow:before {
+  border-width: 8px 0 8px 8px;
+  border-left-color: initial;
+  right: -7px;
+  transform-origin: center left
+}
+
+.tippy-box[data-placement^=right]>.tippy-arrow {
+  left: 0
+}
+
+.tippy-box[data-placement^=right]>.tippy-arrow:before {
+  left: -7px;
+  border-width: 8px 8px 8px 0;
+  border-right-color: initial;
+  transform-origin: center right
+}
+
+.tippy-box[data-inertia][data-state=visible] {
+  transition-timing-function: cubic-bezier(.54, 1.5, .38, 1.11)
+}
+
+.tippy-arrow {
+  width: 16px;
+  height: 16px;
+  color: #333
+}
+
+.tippy-arrow:before {
+  content: "";
+  position: absolute;
+  border-color: transparent;
+  border-style: solid
+}
+
+.tippy-content {
+  position: relative;
+  padding: 5px 9px;
+  z-index: 1
+}

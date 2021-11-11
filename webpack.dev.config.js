@@ -28,8 +28,14 @@ module.exports = {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [{ loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' }],
         include: defaultInclude
+      },
+      {
+        test: /jquery-ui\/.+\.js$/,
+        use: {
+          loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+        }
       }
-    ]
+    ],
   },
   target: 'electron-renderer',
   plugins: [

@@ -1,4 +1,86 @@
 #main-timeline {
-  background-color: darkred;
+  background-color: #222;
   flex: 3;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.event {
+  font-size: 12px;
+  background-color: #229;
+  border-radius: 4px;
+  margin-top: 4px;
+  position: absolute;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  padding: 2px;
+  box-sizing: border-box;
+  color: #eee;
+  text-align: center;
+  border: 1px solid #aaaa;
+}
+
+.hour-label {
+  position: absolute;
+  font-size: 0.75rem;
+  user-select: none;
+  width: 30px;
+}
+
+.hour-label:before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 1px;
+  height: 80px;
+  left: 50%;
+  right: 50%;
+  background-color: #aaa5;
+}
+
+.now-indicator {
+  width: 1px;
+  height: 80px;
+  display: block;
+  position: absolute;
+  background-color: #a55;
+  z-index: 100;
+}
+
+.now-indicator:after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  margin-left: -5px;
+  border-radius: 8px;
+  background-color: #a55;
+  z-index: 100;
+}
+
+.new-event {
+  height: 20px;
+  width: 60px;
+  visibility: hidden;
+  background-color: #2295;
+  border-radius: 4px;
+  margin-top: 4px;
+  position: absolute;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid #aaa5;
+  cursor: pointer;
+}
+
+.new-event:hover {
+  background-color: #2299;
+  border: 1px solid #aaa9;
 }

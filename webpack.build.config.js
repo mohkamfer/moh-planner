@@ -11,11 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader'
-        ],
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }],
         include: defaultInclude
       },
       {
@@ -32,8 +28,14 @@ module.exports = {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [{ loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' }],
         include: defaultInclude
+      },
+      {
+        test: /jquery-ui\/.+\.js$/,
+        use: {
+          loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+        }
       }
-    ]
+    ],
   },
   target: 'electron-renderer',
   plugins: [
