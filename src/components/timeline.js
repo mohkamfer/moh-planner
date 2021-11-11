@@ -21,7 +21,7 @@ function Timeline() {
 
   useEffect(() => {
     let now = new Date();
-    const nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDay(), now.getHours(), 0, 0);
+    const nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
     const startDate = subHours(nowCeil, 12);
     const endDate = addHours(nowCeil, 12);
     const labels = $('.hour-label');
@@ -32,7 +32,7 @@ function Timeline() {
       for (let i = 0, currentDate = startDate; i < 25; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
         const offset = i * 120;
-        const day = currentDate.getDay();
+        const day = currentDate.getDate();
         const hour = currentDate.getHours();
 
         labels.eq(i).text(currentTime);
@@ -45,7 +45,7 @@ function Timeline() {
       labelWidth = parseInt(labels.eq(0).css('width'));
       labelHeight = parseInt(labels.eq(0).css('height'));
 
-      let nowLabel = $(`.hour-label[day=${now.getDay()}][hour=${now.getHours()}]`);
+      let nowLabel = $(`.hour-label[day=${now.getDate()}][hour=${now.getHours()}]`);
       $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * 2)}px`);
     };
 
@@ -137,7 +137,7 @@ function Timeline() {
 
   useEffect(() => {
     events.forEach(event => {
-      const label = $(`.hour-label[day=${event.time.getDay()}][hour=${event.time.getHours()}]`);
+      const label = $(`.hour-label[day=${event.time.getDate()}][hour=${event.time.getHours()}]`);
       const eventCard = $(`<div
       class="event"
       style="
