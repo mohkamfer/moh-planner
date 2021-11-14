@@ -195,6 +195,28 @@ function Timeline() {
         scroll: true,
         axis: 'x',
         grid: [10, 0],
+        stop: function (e, ui) {
+          const labels = $('.hour-label');
+          const now = new Date();
+          let cardLeft = ui.position.left - 15;
+          let index = parseInt(cardLeft / 120);
+          let minutes = (cardLeft % 120) / 2;
+          let nearestLabel = labels.eq(index);
+          let eventDate = new Date(now.getFullYear(), now.getMonth(), nearestLabel.attr('day'), nearestLabel.attr('hour'), minutes, 0);
+          let uuid = e.target.getAttribute('uuid');
+          let eventIndex = -1;
+          const event = eventsRef.current.find(function (event, index) {
+            eventIndex = index;
+            return event.uuid === uuid;
+          });
+          if (event) {
+            event.time = eventDate;
+            eventsRef.current.splice(eventIndex, 1);
+            setTimeout(function() {
+              setEvents([...eventsRef.current, event]);
+            }, 0);
+          }
+        },
       }).resizable({
         handles: 'e',
         resize: function(e, ui) {
