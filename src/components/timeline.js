@@ -88,6 +88,11 @@ function Timeline() {
 
       if (now.getHours() !== lastHour) {
         setEvents([...eventsRef.current]);
+        $('.now-indicator')[0].scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center'
+        });
       }
       lastHour = now.getHours();
     };
