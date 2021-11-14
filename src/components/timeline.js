@@ -56,14 +56,17 @@ function Timeline() {
 
   useEffect(() => {
     let now = new Date();
-    const nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
-    const startDate = subHours(nowCeil, 12);
-    const endDate = addHours(nowCeil, 12);
-    const labels = $('.hour-label');
+    let nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
+    let startDate = subHours(nowCeil, 12);
+    let endDate = addHours(nowCeil, 12);
+    let labels = $('.hour-label');
     let labelWidth = 0, labelHeight = 0;
+    let lastHour = now.getHours();
 
     const tick = () => {
       now = new Date();
+      nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
+      startDate = subHours(nowCeil, 12);
       for (let i = 0, currentDate = startDate; i < 25; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
         const offset = i * 120;
@@ -82,6 +85,11 @@ function Timeline() {
 
       let nowLabel = $(`.hour-label[day=${now.getDate()}][hour=${now.getHours()}]`);
       $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * 2)}px`);
+
+      if (now.getHours() !== lastHour) {
+        setEvents([...eventsRef.current]);
+      }
+      lastHour = now.getHours();
     };
 
     tick();
