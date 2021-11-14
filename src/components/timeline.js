@@ -222,6 +222,22 @@ function Timeline() {
         resize: function(e, ui) {
           ui.size.width = Math.max(20, 10 + parseInt(ui.size.width / 10) * 10);
         },
+        stop: function (e, ui) {
+          let cardWidth = ui.size.width;
+          let uuid = e.target.getAttribute('uuid');
+          let eventIndex = -1;
+          const event = eventsRef.current.find(function (event, index) {
+            eventIndex = index;
+            return event.uuid === uuid;
+          });
+          if (event) {
+            event.duration = cardWidth / 2;
+            eventsRef.current.splice(eventIndex, 1);
+            setTimeout(function() {
+              setEvents([...eventsRef.current, event]);
+            }, 0);
+          }
+        },
       });
     });
   }, [events]);
