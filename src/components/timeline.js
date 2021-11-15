@@ -28,6 +28,7 @@ function Timeline() {
   }
 
   const [events, setEvents, eventsRef] = useStateRef([]);
+  const [loaded, setLoaded] = useState(false);
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -49,10 +50,21 @@ function Timeline() {
             time: eventDate,
             duration: 30,
           }]);
+
+          saveEvents();
         }
       }
     });
   };
+
+  const saveEvents = (eventsList) => {
+    localStorage.setItem('events', JSON.stringify(eventsList || []));
+  }
+
+  const loadEvents = () => {
+    setEvents(JSON.parse(localStorage.getItem('events') || "[]").map(event => ({...event, time: new Date(event.time)})));
+    setLoaded(true);
+  }
 
   useEffect(() => {
     let now = new Date();
@@ -98,7 +110,7 @@ function Timeline() {
     };
 
     tick();
-
+    loadEvents();
     setInterval(tick, 2000);
 
     $('.now-indicator')[0].scrollIntoView({
@@ -245,6 +257,9 @@ function Timeline() {
         },
       });
     });
+
+    if (loaded)
+      saveEvents(events);
   }, [events]);
 
   return (
