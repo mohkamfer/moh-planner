@@ -66,22 +66,31 @@ function Timeline() {
   }
 
   const loadEvents = () => {
-    setEvents(JSON.parse(localStorage.getItem('events') || "[]").map(event => ({...event, time: new Date(event.time)})));
+    const startDate = getStartDate();
+    setEvents(JSON.parse(localStorage.getItem('events') || "[]")
+      .map(event => ({...event, time: new Date(event.time)}))
+      .filter(event => event.time >= startDate));
     setLoaded(true);
+  }
+
+  const getNowCeil = () => {
+    let now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
+  }
+
+  const getStartDate = () => {
+    return subHours(getNowCeil(), HOURS_BEFORE);
   }
 
   useEffect(() => {
     let now = new Date();
-    let nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
-    let startDate = subHours(nowCeil, HOURS_BEFORE);
+    let startDate = getStartDate();
     let labels = $('.hour-label');
     let labelWidth = 0, labelHeight = 0;
     let lastHour = now.getHours();
 
     const tick = () => {
-      now = new Date();
-      nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
-      startDate = subHours(nowCeil, HOURS_BEFORE);
+      startDate = getStartDate();
       for (let i = 0, currentDate = startDate; i < HOURS_TOTAL; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
         const offset = i * HOUR_WIDTH_PX;
@@ -94,9 +103,6 @@ function Timeline() {
         labels.eq(i).css('left', offset);
         labels.eq(i).css('color', '#ccc');
       }
-
-      labelWidth = parseInt(labels.eq(0).css('width'));
-      labelHeight = parseInt(labels.eq(0).css('height'));
 
       let nowLabel = $(`.hour-label[day=${now.getDate()}][hour=${now.getHours()}]`);
       $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * (HOUR_WIDTH_PX / 60))}px`);
@@ -111,6 +117,9 @@ function Timeline() {
       }
       lastHour = now.getHours();
     };
+
+    labelWidth = parseInt(labels.eq(0).css('width'));
+    labelHeight = parseInt(labels.eq(0).css('height'));
 
     tick();
     loadEvents();
