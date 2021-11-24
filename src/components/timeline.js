@@ -16,6 +16,8 @@ var vex = require('vex-js')
 vex.registerPlugin(require('vex-dialog'))
 vex.defaultOptions.className = 'vex-theme-default'
 
+const HOURS_BEFORE = 6;
+
 function Timeline() {
 
   function useStateRef(initialValue) {
@@ -69,8 +71,7 @@ function Timeline() {
   useEffect(() => {
     let now = new Date();
     let nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
-    let startDate = subHours(nowCeil, 12);
-    let endDate = addHours(nowCeil, 12);
+    let startDate = subHours(nowCeil, HOURS_BEFORE);
     let labels = $('.hour-label');
     let labelWidth = 0, labelHeight = 0;
     let lastHour = now.getHours();
@@ -78,7 +79,7 @@ function Timeline() {
     const tick = () => {
       now = new Date();
       nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
-      startDate = subHours(nowCeil, 12);
+      startDate = subHours(nowCeil, HOURS_BEFORE);
       for (let i = 0, currentDate = startDate; i < 25; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
         const offset = i * 120;
