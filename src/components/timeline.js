@@ -40,7 +40,7 @@ function Timeline() {
     let index = parseInt(cardLeft / 120);
     let minutes = (cardLeft % 120) / 2;
     let nearestLabel = labels.eq(index);
-    let eventDate = new Date(now.getFullYear(), now.getMonth() + 1, nearestLabel.attr('day'), nearestLabel.attr('hour'), minutes, 0);
+    let eventDate = new Date(now.getFullYear(), now.getMonth(), nearestLabel.attr('day'), nearestLabel.attr('hour'), minutes, 0);
     vex.dialog.prompt({
       message: 'Enter event title',
       placeholder: 'Event title',
