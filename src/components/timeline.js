@@ -17,6 +17,8 @@ vex.registerPlugin(require('vex-dialog'))
 vex.defaultOptions.className = 'vex-theme-default'
 
 const HOURS_BEFORE = 6;
+const HOURS_TOTAL = 25;
+const HOUR_WIDTH_PX = 120;
 
 function Timeline() {
 
@@ -37,8 +39,8 @@ function Timeline() {
     const labels = $('.hour-label');
     const now = new Date();
     let cardLeft = parseInt($(e.target).css('left')) - 15;
-    let index = parseInt(cardLeft / 120);
-    let minutes = (cardLeft % 120) / 2;
+    let index = parseInt(cardLeft / HOUR_WIDTH_PX);
+    let minutes = (cardLeft % HOUR_WIDTH_PX) / 2;
     let nearestLabel = labels.eq(index);
     let eventDate = new Date(now.getFullYear(), now.getMonth(), nearestLabel.attr('day'), nearestLabel.attr('hour'), minutes, 0);
     vex.dialog.prompt({
@@ -80,9 +82,9 @@ function Timeline() {
       now = new Date();
       nowCeil = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
       startDate = subHours(nowCeil, HOURS_BEFORE);
-      for (let i = 0, currentDate = startDate; i < 25; ++i, currentDate = addHours(startDate, i)) {
+      for (let i = 0, currentDate = startDate; i < HOURS_TOTAL; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
-        const offset = i * 120;
+        const offset = i * HOUR_WIDTH_PX;
         const day = currentDate.getDate();
         const hour = currentDate.getHours();
 
@@ -97,7 +99,7 @@ function Timeline() {
       labelHeight = parseInt(labels.eq(0).css('height'));
 
       let nowLabel = $(`.hour-label[day=${now.getDate()}][hour=${now.getHours()}]`);
-      $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * 2)}px`);
+      $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * (HOUR_WIDTH_PX / 60))}px`);
 
       if (now.getHours() !== lastHour) {
         setEvents([...eventsRef.current]);
@@ -166,8 +168,8 @@ function Timeline() {
       var y = (e.pageY - $('#main-timeline').offset().top) + $('#main-timeline').scrollTop();
       if (y < labelHeight) {
         if ((x > (labelWidth / 2)) && (x < ($('#main-timeline')[0].scrollWidth - (labelWidth / 2)))) {
-          x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - 60) - (labelWidth / 2);
-          $('.new-event').css('visibility', 'visible').css('left', `${parseInt(x / 60) * 60 + (labelWidth / 2)}px`);
+          x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - (HOUR_WIDTH_PX / 2)) - (labelWidth / 2);
+          $('.new-event').css('visibility', 'visible').css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
           return;
         }
       }
@@ -196,8 +198,8 @@ function Timeline() {
       class="event"
       uuid="${event.uuid}"
       style="
-        left:${parseInt(label.css('left')) + (parseInt(label.css('width')) / 2) + (parseInt(event.time.getMinutes() * 2))}px;
-        width:${event.duration * 2}px">
+        left:${parseInt(label.css('left')) + (parseInt(label.css('width')) / 2) + (parseInt(event.time.getMinutes() * (HOUR_WIDTH_PX / 60)))}px;
+        width:${event.duration * (HOUR_WIDTH_PX / 60)}px">
         ${event.title}
       </div>`);
       tippy(eventCard[0], {
@@ -217,8 +219,8 @@ function Timeline() {
           const labels = $('.hour-label');
           const now = new Date();
           let cardLeft = ui.position.left - 15;
-          let index = parseInt(cardLeft / 120);
-          let minutes = (cardLeft % 120) / 2;
+          let index = parseInt(cardLeft / HOUR_WIDTH_PX);
+          let minutes = (cardLeft % HOUR_WIDTH_PX) / 2;
           let nearestLabel = labels.eq(index);
           let eventDate = new Date(now.getFullYear(), now.getMonth(), nearestLabel.attr('day'), nearestLabel.attr('hour'), minutes, 0);
           let uuid = e.target.getAttribute('uuid');
