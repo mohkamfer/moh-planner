@@ -90,6 +90,7 @@ function Timeline() {
     let lastHour = now.getHours();
 
     const tick = () => {
+      now = new Date();
       startDate = getStartDate();
       for (let i = 0, currentDate = startDate; i < HOURS_TOTAL; ++i, currentDate = addHours(startDate, i)) {
         const currentTime = format(currentDate, 'h aaa');
