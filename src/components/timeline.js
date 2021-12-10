@@ -82,6 +82,14 @@ function Timeline() {
     return subHours(getNowCeil(), HOURS_BEFORE);
   }
 
+  const scrollToNow = () => {
+    $('.now-indicator')[0].scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
+  }
+
   useEffect(() => {
     let now = new Date();
     let startDate = getStartDate();
@@ -110,11 +118,7 @@ function Timeline() {
 
       if (now.getHours() !== lastHour) {
         setEvents([...eventsRef.current]);
-        $('.now-indicator')[0].scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center'
-        });
+        scrollToNow();
       }
       lastHour = now.getHours();
     };
@@ -126,11 +130,7 @@ function Timeline() {
     loadEvents();
     setInterval(tick, 2000);
 
-    $('.now-indicator')[0].scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center'
-    });
+    scrollToNow();
 
     $(document).on('click', '.event', function (e) {
       e.preventDefault();
