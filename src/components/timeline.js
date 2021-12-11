@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { format, subHours, addHours } from 'date-fns';
+import { format, subHours, addHours, differenceInMilliseconds } from 'date-fns';
 import tippy, { followCursor } from 'tippy.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -121,6 +121,19 @@ function Timeline() {
         scrollToNow();
       }
       lastHour = now.getHours();
+
+      eventsRef.current && eventsRef.current.forEach(event => {
+        if (Math.abs(differenceInMilliseconds(event.time, now)) < 1000) {
+          vex.dialog.alert({
+            message: `Happening now: ${event.title}`,
+            afterOpen: function() {
+              setTimeout(() => {
+                this.close();
+              }, 5000);
+            }
+          });
+        }
+      });
     };
 
     labelWidth = parseInt(labels.eq(0).css('width'));
