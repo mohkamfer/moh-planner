@@ -9,6 +9,8 @@ import '../assets/jquery-ui/all.css';
 import '../assets/css/vex-js/vex.css';
 import '../assets/css/vex-js/vex-theme-default.css';
 
+import notificationSoundMP3 from "../assets/sound/notification.mp3";
+
 import '../assets/css/timeline.css';
 import $ from 'jquery';
 
@@ -90,6 +92,10 @@ function Timeline() {
     });
   }
 
+  const playNotification = () => {
+    new Audio(notificationSoundMP3).play();
+  }
+
   useEffect(() => {
     let now = new Date();
     let startDate = getStartDate();
@@ -132,6 +138,8 @@ function Timeline() {
               }, 5000);
             }
           });
+
+          playNotification();
         }
       });
     };

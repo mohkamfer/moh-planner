@@ -34,6 +34,12 @@ module.exports = {
         use: {
           loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
         }
+      },
+      {
+        test: /\.mp3$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ],
   },
