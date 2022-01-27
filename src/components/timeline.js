@@ -123,7 +123,7 @@ function Timeline() {
       $('.now-indicator').css('left', `${parseInt(nowLabel.css('left')) + (labelWidth / 2) + (parseInt(now.getMinutes()) * (HOUR_WIDTH_PX / 60))}px`);
 
       if (now.getHours() !== lastHour) {
-        setEvents([...eventsRef.current]);
+        setEvents([...eventsRef.current].filter(event => event.time >= startDate));
         scrollToNow();
       }
       lastHour = now.getHours();
