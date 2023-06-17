@@ -95,6 +95,9 @@ function createWindow() {
     ipcMain.on('close', (e, arg) => {
       mainWindow.close();
     });
+    ipcMain.on("add-task", (e, arg) => {
+      e.sender.send("add-task", arg);
+    })
   });
 
   // Emitted when the window is closed.

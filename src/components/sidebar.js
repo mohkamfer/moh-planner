@@ -1,24 +1,36 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
 
 import '../assets/css/sidebar.css';
 
+const { ipcRenderer } = require('electron');
+
 function Sidebar() {
+
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (taskName) => {
+    setTasks([...tasks, taskName]);
+  }
+
+  const handleInputKeyDown = (e) => {
+    let key = e.key;
+    let text = e.target.value;
+    if (key === "Enter") {
+      if (text === "") return;
+      ipcRenderer.send("add-task", text);
+      addTask(text);
+      e.target.value = "";
+    }
+  }
+
   return (
     <div className="sidebar">
-    <ul>
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
-      <li>Item 4</li>
-      <li>Item 5</li>
-      <li>Item 6</li>
-      <li>Item 7</li>
-      <li>Item 8</li>
-      <li>Item 9</li>
-      <li>Item 10</li>
-    </ul>
-  </div>
+      <h4 id="sidebar-title">Tasks</h4>
+      <ul id="task-list">
+        <input onKeyDown={handleInputKeyDown} id="new-task-input" placeholder="Add new"></input>
+        {tasks.map((task, index) => <li key={index}>{task}</li>)}
+      </ul>
+    </div>
   );
 }
 

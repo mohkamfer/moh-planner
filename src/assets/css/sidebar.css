@@ -1,30 +1,41 @@
 .sidebar {
-  position: fixed;
-  top: 40px;
-  right: 0;
-  height: 100%;
   width: 250px;
   z-index: 900;
-  background-color: #bebebe;
-  padding: 20px;
   overflow: auto;
-  padding-bottom: 80px;
-  transform: translateX(290px);
+  background-color: #505050;
+  padding: 10px;
+  overflow: auto;
+  box-sizing: border-box;
   box-shadow: -2px 0 5px rgba(15, 15, 15, 0.95);
   transition: all 0.3s ease !important;
+}
+
+#sidebar-title {
+  color: rgb(196, 196, 196);
+  display: inline-block;
+}
+
+#new-task-input {
+  background-color: #505050;
+  margin: 12px;
+  border: 0;
+  color: rgb(221, 221, 221) !important;
+  outline: 0;
+}
+
+#new-task-input::placeholder {
+  color:rgb(196, 196, 196);
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
-  padding-top: 30px;
-  padding-bottom: 80px;
 }
 
 .sidebar li {
   padding: 10px;
   cursor: pointer;
-  color: rgba(0, 0, 0, 1) !important;
+  color: rgb(221, 221, 221) !important;
 }
 
 .sidebar li:hover {

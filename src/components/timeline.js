@@ -16,6 +16,8 @@ import notificationSoundMP3 from "../assets/sound/notification.mp3";
 import '../assets/css/timeline.css';
 import $ from 'jquery';
 
+const { ipcRenderer } = require('electron');
+
 var vex = require('vex-js')
 vex.registerPlugin(require('vex-dialog'))
 vex.defaultOptions.className = 'vex-theme-default'
@@ -46,9 +48,9 @@ function Timeline() {
   useEffect(() => {
     const sidebar = document.querySelector('.sidebar');
     if (sidebarVisible) {
-      sidebar.style.transform = 'translateX(0px)';
+      // sidebar.style.transform = 'translateX(0px)';
     } else {
-      sidebar.style.transform = 'translateX(290px)';
+      // sidebar.style.transform = 'translateX(250px)';
     }
   }, [sidebarVisible]);
 
@@ -203,7 +205,6 @@ function Timeline() {
     });
 
     $(document).on('mousewheel', '#main-timeline', function (e) {
-      console.log($(e.target).closest(".sidebar"));
       if ($(e.target).closest(".sidebar").length < 1) {
         if (e.originalEvent.wheelDelta / 120 > 0) {
           $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() - 25);
@@ -231,6 +232,9 @@ function Timeline() {
       const id = e.target.id
       id && id !== 'main-timeline' && $('.new-event').css('visibility', 'hidden');
     });
+
+    ipcRenderer.on("add-task", (event, task) => {
+    })
 
     return (() => {
       $(document).off('mousewheel', '#main-timeline');
@@ -317,8 +321,7 @@ function Timeline() {
 
   return (
     <div id="main-timeline">
-      <Sidebar />
-      <button className="overflow-menu-button" onClick={toggleSidebar}>☰</button>
+      {/* <button className="overflow-menu-button" onClick={toggleSidebar}>☰</button> */}
       <span className="hour-label"></span>
       <span className="hour-label"></span>
       <span className="hour-label"></span>
