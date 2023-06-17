@@ -1,0 +1,32 @@
+.sidebar {
+  position: fixed;
+  top: 40px;
+  right: 0;
+  height: 100%;
+  width: 250px;
+  z-index: 900;
+  background-color: #bebebe;
+  padding: 20px;
+  overflow: auto;
+  padding-bottom: 80px;
+  transform: translateX(290px);
+  box-shadow: -2px 0 5px rgba(15, 15, 15, 0.95);
+  transition: all 0.3s ease !important;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  padding-top: 30px;
+  padding-bottom: 80px;
+}
+
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.sidebar li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

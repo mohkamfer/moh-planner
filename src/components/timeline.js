@@ -3,6 +3,8 @@ import { format, subHours, addHours, differenceInMilliseconds } from 'date-fns';
 import tippy, { followCursor } from 'tippy.js';
 import { v4 as uuidv4 } from 'uuid';
 
+import Sidebar from './sidebar';
+
 import draggable from 'jquery-ui/ui/widgets/draggable';
 import resizable from 'jquery-ui/ui/widgets/resizable';
 import '../assets/jquery-ui/all.css';
@@ -35,6 +37,20 @@ function Timeline() {
 
   const [events, setEvents, eventsRef] = useStateRef([]);
   const [loaded, setLoaded] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  }
+  
+  useEffect(() => {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebarVisible) {
+      sidebar.style.transform = 'translateX(0px)';
+    } else {
+      sidebar.style.transform = 'translateX(290px)';
+    }
+  }, [sidebarVisible]);
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -187,10 +203,13 @@ function Timeline() {
     });
 
     $(document).on('mousewheel', '#main-timeline', function (e) {
-      if (e.originalEvent.wheelDelta / 120 > 0) {
-        $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() - 25);
-      } else {
-        $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() + 25);
+      console.log($(e.target).closest(".sidebar"));
+      if ($(e.target).closest(".sidebar").length < 1) {
+        if (e.originalEvent.wheelDelta / 120 > 0) {
+          $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() - 25);
+        } else {
+          $('#main-timeline').scrollLeft($('#main-timeline').scrollLeft() + 25);
+        }
       }
     });
 
@@ -298,6 +317,8 @@ function Timeline() {
 
   return (
     <div id="main-timeline">
+      <Sidebar />
+      <button className="overflow-menu-button" onClick={toggleSidebar}>☰</button>
       <span className="hour-label"></span>
       <span className="hour-label"></span>
       <span className="hour-label"></span>
