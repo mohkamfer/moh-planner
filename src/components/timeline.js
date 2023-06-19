@@ -39,6 +39,7 @@ function Timeline() {
 
   const [events, setEvents, eventsRef] = useStateRef([]);
   const [loaded, setLoaded] = useState(false);
+  let shiftKeyPressed = false;
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -220,6 +221,7 @@ function Timeline() {
     });
 
     $(document).on('dragover', '#main-timeline', function (e) {
+      shiftKeyPressed = e.shiftKey;
       e.preventDefault();
       
       var x = (e.pageX - $('#main-timeline').offset().left) + $('#main-timeline').scrollLeft();
@@ -255,7 +257,10 @@ function Timeline() {
           }]);
 
           saveEvents();
-          event.sender.send("remove-task-from-sidebar", index);
+
+          if (!shiftKeyPressed) {
+            event.sender.send("remove-task-from-sidebar", index);
+          }
           return;
         }
       }
