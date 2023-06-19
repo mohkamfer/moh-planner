@@ -39,20 +39,6 @@ function Timeline() {
 
   const [events, setEvents, eventsRef] = useStateRef([]);
   const [loaded, setLoaded] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  }
-  
-  useEffect(() => {
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebarVisible) {
-      // sidebar.style.transform = 'translateX(0px)';
-    } else {
-      // sidebar.style.transform = 'translateX(250px)';
-    }
-  }, [sidebarVisible]);
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -233,13 +219,53 @@ function Timeline() {
       id && id !== 'main-timeline' && $('.new-event').css('visibility', 'hidden');
     });
 
-    ipcRenderer.on("add-task", (event, task) => {
-    })
+    $(document).on('dragover', '#main-timeline', function (e) {
+      e.preventDefault();
+      
+      var x = (e.pageX - $('#main-timeline').offset().left) + $('#main-timeline').scrollLeft();
+      var y = (e.pageY - $('#main-timeline').offset().top) + $('#main-timeline').scrollTop();
+      if (y < labelHeight) {
+        if ((x > (labelWidth / 2)) && (x < ($('#main-timeline')[0].scrollWidth - (labelWidth / 2)))) {
+          x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - (HOUR_WIDTH_PX / 2)) - (labelWidth / 2);
+          $('.new-event').css('visibility', 'visible').css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
+          return;
+        }
+      }
+
+      $('.new-event').css('visibility', 'hidden');
+    });
+
+    ipcRenderer.on("add-task-from-sidebar", (event, index, eventX, eventY) => {
+      var x = (eventX - $('#main-timeline').offset().left) + $('#main-timeline').scrollLeft();
+      var y = (eventY - $('#main-timeline').offset().top) + $('#main-timeline').scrollTop();
+      if (y < labelHeight) {
+        if ((x > (labelWidth / 2)) && (x < ($('#main-timeline')[0].scrollWidth - (labelWidth / 2)))) {
+          x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - (HOUR_WIDTH_PX / 2)) - (labelWidth / 2);
+          let halfIndex = Math.floor(x / (HOUR_WIDTH_PX / 2));
+          let minutes = halfIndex * 30;
+          let eventTime = getStartDate();
+          eventTime.setMinutes(eventTime.getMinutes() + minutes);
+          
+          let task = $(".sidebar li").eq(index).text();
+          setEvents([...eventsRef.current, {
+            uuid: uuidv4(),
+            title: task,
+            time: eventTime,
+            duration: 30,
+          }]);
+
+          saveEvents();
+          event.sender.send("remove-task-from-sidebar", index);
+          return;
+        }
+      }
+    });
 
     return (() => {
       $(document).off('mousewheel', '#main-timeline');
       $(document).off('mousemove', '#main-timeline');
       $(document).off('mousemove');
+      $(document).off('dragover');
       $(document).off('click', '.event');
     });
   }, []);
@@ -321,32 +347,10 @@ function Timeline() {
 
   return (
     <div id="main-timeline">
-      {/* <button className="overflow-menu-button" onClick={toggleSidebar}>☰</button> */}
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
-      <span className="hour-label"></span>
+      {Array(HOURS_TOTAL).fill(0).map((_) => (
+        <span className="hour-label"></span>
+      ))}
+
       <div className="now-indicator"></div>
       <div className="new-event" onClick={addEvent}></div>
     </div>
