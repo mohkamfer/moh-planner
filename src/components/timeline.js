@@ -347,8 +347,8 @@ function Timeline() {
 
   return (
     <div id="main-timeline">
-      {Array(HOURS_TOTAL).fill(0).map((_) => (
-        <span className="hour-label"></span>
+      {Array(HOURS_TOTAL).fill(0).map((_, index) => (
+        <span key={index} className="hour-label"></span>
       ))}
 
       <div className="now-indicator"></div>
