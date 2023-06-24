@@ -54,10 +54,21 @@ function Sidebar() {
     ipcRenderer.send("add-task-from-sidebar", index, e.pageX, e.pageY);
   }
 
+  const removeTask = (index) => {
+    setTasks(tasksRef.current.filter((_, i) => i !== index));
+  }
+
   useEffect(() => {
     loadTasks();
     ipcRenderer.on("remove-task-from-sidebar", (event, index) => {
-      setTasks(tasksRef.current.filter((_, i) => i !== index));
+      removeTask(index);
+    });
+
+    $(document).on("click", ".remove-task", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      let itemIndex = parseInt($(e.target).parent().attr("index"));
+      removeTask(itemIndex);
     })
   }, []);
 
