@@ -33,11 +33,34 @@
 }
 
 .sidebar li {
-  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px 10px 10px;
   cursor: pointer;
   color: rgb(221, 221, 221) !important;
+  border-bottom : 1px solid #aaa9;
+  transition: background-color 200ms ease;
 }
 
 .sidebar li:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar li .remove-task {
+  position: absolute;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 14px;
+  height: 14px;
+  right: 4px;
+  background-color: #6d6d6d;
+  color: #fff;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+}
+
+.sidebar li .remove-task:hover {
+  background-color: #6e150b;
 }

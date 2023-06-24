@@ -71,7 +71,7 @@ function Sidebar() {
       <h4 id="sidebar-title">Tasks</h4>
       <ul id="task-list">
         <input onKeyDown={handleInputKeyDown} id="new-task-input" placeholder="Add new"></input>
-        {tasks.map((task, index) => <li key={index} index={index} onDragStart={handleDragStart} onDragEnd={handleDragEnd} draggable="true">{task}</li>)}
+        {tasks.map((task, index) => <li key={index} index={index} onDragStart={handleDragStart} onDragEnd={handleDragEnd} draggable="true">{task}<span className="remove-task">x</span></li>)}
       </ul>
     </div>
   );

@@ -207,7 +207,9 @@ function Timeline() {
       if (y < labelHeight) {
         if ((x > (labelWidth / 2)) && (x < ($('#main-timeline')[0].scrollWidth - (labelWidth / 2)))) {
           x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - (HOUR_WIDTH_PX / 2)) - (labelWidth / 2);
-          $('.new-event').css('visibility', 'visible').css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
+          $('.new-event')
+            .css('visibility', 'visible')
+            .css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
           return;
         }
       }
@@ -229,7 +231,9 @@ function Timeline() {
       if (y < labelHeight) {
         if ((x > (labelWidth / 2)) && (x < ($('#main-timeline')[0].scrollWidth - (labelWidth / 2)))) {
           x = Math.min(x, $('#main-timeline')[0].scrollWidth - (labelWidth / 2) - (HOUR_WIDTH_PX / 2)) - (labelWidth / 2);
-          $('.new-event').css('visibility', 'visible').css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
+          $('.new-event')
+            .css('visibility', 'visible')
+            .css('left', `${parseInt(x / (HOUR_WIDTH_PX / 2)) * (HOUR_WIDTH_PX / 2) + (labelWidth / 2)}px`);
           return;
         }
       }
