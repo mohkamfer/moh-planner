@@ -1,46 +1,74 @@
 .sidebar {
+  position: relative;
   width: 250px;
   z-index: 900;
   overflow: auto;
   background-color: #505050;
-  padding: 10px;
+  padding: 18px 10px 4px 10px;
   overflow: auto;
   box-sizing: border-box;
   box-shadow: -2px 0 5px rgba(15, 15, 15, 0.95);
   transition: all 0.3s ease !important;
 }
 
-#sidebar-title {
-  color: rgb(196, 196, 196);
-  display: inline-block;
+.sidebar .folder-container {
+  position: relative;
 }
 
-#new-task-input {
+.sidebar .folder-container .remove-folder {
+  position: absolute;
+  right: 6px;
+  top: 18px;
+  padding: 1px 3px;
+  border-radius: 2px;
+  background-color: #6d6d6d;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.sidebar .folder-container .remove-folder:hover {
+  background-color: #6e150b;
+}
+
+.sidebar-title {
+  color: rgb(196, 196, 196);
+  display: inline-block;
+  cursor: pointer;
+  margin: 21px 0;
+}
+
+.new-task-input {
   background-color: #505050;
-  margin: 12px;
+  margin: 6px 12px;
   border: 0;
   color: rgb(221, 221, 221) !important;
   outline: 0;
 }
 
-#new-task-input::placeholder {
+.new-task-input::placeholder {
   color:rgb(196, 196, 196);
 }
 
-.sidebar ul {
+.sidebar ul.task-list {
   list-style-type: none;
+  height: auto;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 20px 10px 10px;
+  padding: 6px 20px 6px 10px;
   cursor: pointer;
   color: rgb(221, 221, 221) !important;
   border-bottom : 1px solid #aaa9;
   transition: background-color 200ms ease;
+}
+
+.sidebar li .task-name {
+  font-size: 15px;
 }
 
 .sidebar li:hover {
@@ -55,6 +83,7 @@
   width: 14px;
   height: 14px;
   right: 4px;
+  border-radius: 2px;
   background-color: #6d6d6d;
   color: #fff;
   transition: background-color 200ms ease;
@@ -63,4 +92,24 @@
 
 .sidebar li .remove-task:hover {
   background-color: #6e150b;
+}
+
+.add-folder-button {
+  position: absolute;
+  display: inline;
+  width: 12px;
+  height: 14px;
+  top: 10px;
+  right: 10px;
+  padding: 8px;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 300ms ease;
+}
+
+.add-folder-button:hover {
+  background: #ccc;
+  color: #202020;
 }

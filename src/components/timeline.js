@@ -241,7 +241,7 @@ function Timeline() {
       $('.new-event').css('visibility', 'hidden');
     });
 
-    ipcRenderer.on("add-task-from-sidebar", (event, index, eventX, eventY) => {
+    ipcRenderer.on("add-task-from-sidebar", (event, index, folderId, eventX, eventY) => {
       var x = (eventX - $('#main-timeline').offset().left) + $('#main-timeline').scrollLeft();
       var y = (eventY - $('#main-timeline').offset().top) + $('#main-timeline').scrollTop();
       if (y < labelHeight) {
@@ -252,10 +252,12 @@ function Timeline() {
           let eventTime = getStartDate();
           eventTime.setMinutes(eventTime.getMinutes() + minutes);
           
-          let task = $(".sidebar li").eq(index).text();
+          let folder = $(`.folder-container[id=${folderId}]`);
+          let task = folder.find(`li:nth-of-type(${index + 1})`);
+          let taskName = task.find("span.task-name").text();
           setEvents([...eventsRef.current, {
             uuid: uuidv4(),
-            title: task,
+            title: taskName,
             time: eventTime,
             duration: 30,
           }]);
@@ -263,7 +265,7 @@ function Timeline() {
           saveEvents();
 
           if (!shiftKeyPressed) {
-            event.sender.send("remove-task-from-sidebar", index);
+            event.sender.send("remove-task-from-sidebar", index, folderId);
           }
           return;
         }
