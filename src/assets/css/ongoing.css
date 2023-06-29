@@ -1,0 +1,12 @@
+#ongoing-details {
+  height: 100px;
+  background-color: #555;
+  box-sizing: border-box;
+  z-index: 1000;
+  box-shadow: -2px 0 5px rgba(15, 15, 15, 0.95);
+}
+
+#ongoing-details p {
+  text-align: center;
+  vertical-align: middle;
+}

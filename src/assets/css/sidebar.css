@@ -17,17 +17,18 @@
 
 .sidebar .folder-container .remove-folder {
   position: absolute;
-  right: 6px;
+  right: 4px;
   top: 18px;
   padding: 1px 3px;
   border-radius: 2px;
-  background-color: #6d6d6d;
+  background-color: #b12424;
   cursor: pointer;
   transition: background-color 200ms ease;
 }
 
 .sidebar .folder-container .remove-folder:hover {
-  background-color: #6e150b;
+  background-color: #c2837c;
+  color: black;
 }
 
 .sidebar-title {

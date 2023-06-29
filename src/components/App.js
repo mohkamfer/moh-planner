@@ -1,5 +1,5 @@
 import React from 'react';
-import Suggestions from './suggestions';
+import Ongoing from './ongoing';
 import Timeline from './timeline';
 import Titlebar from './titlebar';
 
@@ -11,6 +11,7 @@ function App() {
     <React.Fragment>
       <Titlebar />
       <div id="container">
+        <Ongoing />
         <div id="content">
           <Timeline />
           <Sidebar />
