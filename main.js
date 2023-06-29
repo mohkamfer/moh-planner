@@ -95,11 +95,11 @@ function createWindow() {
     ipcMain.on('close', (e, arg) => {
       mainWindow.close();
     });
-    ipcMain.on("add-task-from-sidebar", (e, index, pageX, pageY) => {
-      e.sender.send("add-task-from-sidebar", index, pageX, pageY);
+    ipcMain.on("add-task-from-sidebar", (e, index, folderId, pageX, pageY) => {
+      e.sender.send("add-task-from-sidebar", index, folderId, pageX, pageY);
     });
-    ipcMain.on("remove-task-from-sidebar", (e, index) => {
-      e.sender.send("remove-task-from-sidebar", index);
+    ipcMain.on("remove-task-from-sidebar", (e, index, folderId) => {
+      e.sender.send("remove-task-from-sidebar", index, folderId);
     });
   });
 
