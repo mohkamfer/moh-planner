@@ -5,7 +5,7 @@ import '../assets/css/ongoing.css';
 function Ongoing() {
   return (
     <div id="ongoing-details">
-      <p>Ongoing WIP</p>
+      <span className="ongoing-placeholder">No ongoing event</span>
     </div>
   );
 }

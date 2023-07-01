@@ -11,6 +11,11 @@
   transition: all 0.3s ease !important;
 }
 
+.sidebar .sidebar-title {
+  margin-top: 4px;
+  padding-left: 0x;
+}
+
 .sidebar .folder-container {
   position: relative;
 }
@@ -31,7 +36,7 @@
   color: black;
 }
 
-.sidebar-title {
+.folder-title {
   color: rgb(196, 196, 196);
   display: inline-block;
   cursor: pointer;

@@ -133,11 +133,11 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h4>Folders</h4>
+      <h4 className="sidebar-title">Tasks</h4>
       {folders.map((folder, folderIndex) =>
       <div className="folder-container" key={folderIndex} id={folder.id}>
         <span className="remove-folder">x</span>
-        <h4 className="sidebar-title">{folder.name}</h4>
+        <h4 className="folder-title">{folder.name}</h4>
         <ul className="task-list">
           <input onKeyDown={handleInputKeyDown} className="new-task-input" placeholder="Add new"></input>
           {folder.tasks.map((task, taskIndex) =>
