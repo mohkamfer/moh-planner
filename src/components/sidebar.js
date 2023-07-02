@@ -113,7 +113,7 @@ function Sidebar() {
       setFolders([...foldersRef.current.filter(folder => folder.id !== folderId)]);
     });
 
-    $(document).on("click", ".sidebar-title", (e) => {
+    $(document).on("click", ".folder-title", (e) => {
       e.stopPropagation();
       e.preventDefault();
       $(e.target).next().slideToggle();
