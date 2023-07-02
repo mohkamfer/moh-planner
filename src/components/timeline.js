@@ -23,7 +23,7 @@ vex.registerPlugin(require('vex-dialog'))
 vex.defaultOptions.className = 'vex-theme-default'
 
 const HOURS_BEFORE = 6;
-const HOURS_TOTAL = 25;
+const HOURS_TOTAL = 32;
 const HOUR_WIDTH_PX = 120;
 
 function Timeline() {
