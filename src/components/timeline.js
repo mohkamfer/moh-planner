@@ -265,7 +265,7 @@ function Timeline() {
           saveEvents();
 
           if (!shiftKeyPressed) {
-            event.sender.send("remove-task-from-sidebar", index, folderId);
+            // event.sender.send("remove-task-from-sidebar", index, folderId);
           }
           return;
         }
