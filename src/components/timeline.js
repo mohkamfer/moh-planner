@@ -1,20 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { format, subHours, addHours, differenceInMilliseconds } from 'date-fns';
+import { addHours, format, subHours } from 'date-fns';
+import React, { useEffect, useRef, useState } from 'react';
 import tippy, { followCursor } from 'tippy.js';
 import { v4 as uuidv4 } from 'uuid';
 
-import Sidebar from './sidebar';
 
 import draggable from 'jquery-ui/ui/widgets/draggable';
 import resizable from 'jquery-ui/ui/widgets/resizable';
-import '../assets/jquery-ui/all.css';
-import '../assets/css/vex-js/vex.css';
 import '../assets/css/vex-js/vex-theme-default.css';
+import '../assets/css/vex-js/vex.css';
+import '../assets/jquery-ui/all.css';
 
-import notificationSoundMP3 from "../assets/sound/notification.mp3";
-
-import '../assets/css/timeline.css';
 import $ from 'jquery';
+import '../assets/css/timeline.css';
 
 const { ipcRenderer } = require('electron');
 
@@ -97,10 +94,6 @@ function Timeline() {
     });
   }
 
-  const playNotification = () => {
-    new Audio(notificationSoundMP3).play();
-  }
-
   useEffect(() => {
     let now = new Date();
     let startDate = getStartDate();
@@ -133,20 +126,7 @@ function Timeline() {
       }
       lastHour = now.getHours();
 
-      eventsRef.current && eventsRef.current.forEach(event => {
-        if (Math.abs(differenceInMilliseconds(event.time, now)) < 1000) {
-          vex.dialog.alert({
-            message: `Happening now: ${event.title}`,
-            afterOpen: function() {
-              setTimeout(() => {
-                this.close();
-              }, 5000);
-            }
-          });
-
-          playNotification();
-        }
-      });
+      ipcRenderer.send("tick", eventsRef.current);
     };
 
     labelWidth = parseInt(labels.eq(0).css('width'));

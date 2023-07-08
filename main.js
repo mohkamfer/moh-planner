@@ -101,6 +101,9 @@ function createWindow() {
     ipcMain.on("remove-task-from-sidebar", (e, index, folderId) => {
       e.sender.send("remove-task-from-sidebar", index, folderId);
     });
+    ipcMain.on("tick", (e, events) => {
+      e.sender.send("tick", events);
+    });
   });
 
   // Emitted when the window is closed.

@@ -13,3 +13,33 @@
   font-size: 1.2rem;
   margin: auto;
 }
+
+#ongoing-details .ongoing-container {
+  flex: 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#ongoing-details .ongoing-container .ongoing-subscript {
+  font-size: 0.9rem;
+  margin: 4px;
+}
+
+#ongoing-details .ongoing-container .ongoing-timer {
+  font-size: 2rem;
+}
+
+#ongoing-details .ongoing-container .ongoing-name {
+  font-weight: bold;
+  margin: 2px;
+}
+
+#ongoing-details .ongoing-container .ongoing-dates {
+  font-size: 0.8rem;
+}
+
+#ongoing-details .ongoing-placeholder.hidden {
+  display: none;
+}
