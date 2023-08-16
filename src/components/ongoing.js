@@ -88,12 +88,7 @@ function Ongoing() {
         setUpcoming(event);
       }
 
-      // if (Math.abs(diffMillis) < 1000) {
-      //   foundOngoing = true;
-      //   setOngoing(event);
-      // }
-
-      if (diffSecs > (-event.duration * 60)) {
+      if ((diffSecs < 0) && (diffSecs > (-event.duration * 60))) {
         foundOngoing = true;
         let eventEndDate = new Date(event.time);
         eventEndDate.setTime(eventEndDate.getTime() + event.duration * 60 * 1000);
