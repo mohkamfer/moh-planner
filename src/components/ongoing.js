@@ -2,7 +2,9 @@ import { differenceInMilliseconds, format } from 'date-fns';
 import $ from 'jquery';
 import React, { useEffect, useRef, useState } from 'react';
 import '../assets/css/ongoing.css';
-import eventStartedMP3 from "../assets/sound/notification.mp3";
+import upcomingSound from "../assets/sound/upcoming.mp3";
+import startedSound from "../assets/sound/start.mp3";
+import endedSound from "../assets/sound/end.mp3";
 
 const { ipcRenderer } = require('electron');
 
@@ -17,11 +19,20 @@ function Ongoing() {
     return [value, setValue, ref];
   }
 
+  let [loaded, setLoaded] = useState(false);
   let [ongoing, setOngoing, ongoingRef] = useStateRef();
   let [upcoming, setUpcoming, upcomingRef] = useStateRef();
 
-  const playNotification = () => {
-    new Audio(eventStartedMP3).play();
+  const playNotification = (type) => {
+    if (type == "upcoming") {
+      let upcomingAudio = new Audio(upcomingSound);
+      upcomingAudio.volume = 0.5;
+      upcomingAudio.play();
+    } else if (type == "started") {
+      new Audio(startedSound).play();
+    } else if (type == "ended") {
+      new Audio(endedSound).play();
+    }
   };
 
   function formatCountdown(milliseconds) {
@@ -86,6 +97,7 @@ function Ongoing() {
       if (diffSecs >= 299 && diffSecs <= 301) {
         foundUpcoming = true;
         setUpcoming(event);
+        playNotification("upcoming");
       }
 
       if ((diffSecs < 0) && (diffSecs > (-event.duration * 60))) {
@@ -93,16 +105,23 @@ function Ongoing() {
         let eventEndDate = new Date(event.time);
         eventEndDate.setTime(eventEndDate.getTime() + event.duration * 60 * 1000);
         const millisToEnd = eventEndDate - new Date();
-        setOngoing({
+        let newOngoing = {
           name: event.title,
           timeLeft: formatCountdown(millisToEnd),
           startDate: format(event.time, "h:mm a"),
           endDate: format(eventEndDate, "h:mm a")
-        });
+        };
+
+        if (ongoingRef.current == null) {
+          playNotification("started");
+        }
+
+        setOngoing(newOngoing);
       }
 
       if (Math.abs(diffSecs + event.duration * 60) < 1) {
         ongoingNearEnd = true;
+        playNotification("ended");
       }
     }
 
@@ -120,6 +139,8 @@ function Ongoing() {
     } else {
       $(".ongoing-placeholder").addClass("hidden");
     }
+
+    setLoaded(true);
   };
 
   useEffect(() => {
@@ -128,7 +149,7 @@ function Ongoing() {
     return (() => {
       ipcRenderer.off("tick", handleTick);
     });
-  })
+  }, []);
 
   return (
     <div id="ongoing-details">
